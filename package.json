@@ -11,11 +11,15 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-postcss": "^3.1.1",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
+    "sass": "^1.26.7",
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "bulma": "^0.8.2",
     "sirv-cli": "^0.4.4"
   }
 }
