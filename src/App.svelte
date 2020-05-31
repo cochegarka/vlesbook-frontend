@@ -4,16 +4,15 @@
 
     function toUTF8Array(str) {
         var utf8 = [];
-        for (var i=0; i < str.length; i++) {
+        for (var i = 0; i < str.length; i++) {
             var charcode = str.charCodeAt(i);
             if (charcode < 0x80) utf8.push(charcode);
             else if (charcode < 0x800) {
                 utf8.push(0xc0 | (charcode >> 6),
                         0x80 | (charcode & 0x3f));
-            }
-            else if (charcode < 0xd800 || charcode >= 0xe000) {
+            } else if (charcode < 0xd800 || charcode >= 0xe000) {
                 utf8.push(0xe0 | (charcode >> 12),
-                        0x80 | ((charcode>>6) & 0x3f),
+                        0x80 | ((charcode >> 6) & 0x3f),
                         0x80 | (charcode & 0x3f));
             }
             // surrogate pair
@@ -22,16 +21,17 @@
                 // UTF-16 encodes 0x10000-0x10FFFF by
                 // subtracting 0x10000 and splitting the
                 // 20 bits of 0x0-0xFFFFF into two halves
-                charcode = 0x10000 + (((charcode & 0x3ff)<<10)
+                charcode = 0x10000 + (((charcode & 0x3ff) << 10)
                         | (str.charCodeAt(i) & 0x3ff));
-                utf8.push(0xf0 | (charcode >>18),
-                        0x80 | ((charcode>>12) & 0x3f),
-                        0x80 | ((charcode>>6) & 0x3f),
+                utf8.push(0xf0 | (charcode >> 18),
+                        0x80 | ((charcode >> 12) & 0x3f),
+                        0x80 | ((charcode >> 6) & 0x3f),
                         0x80 | (charcode & 0x3f));
             }
         }
         return utf8;
     }
+
     function fromUTF8Array(data) { // array of bytes
         var str = '',
                 i;
@@ -63,7 +63,10 @@
     let focused;
 
     let keyStr = '';
-    let keyBytes;
+    let keyBytes = '';
+
+    let firstForm = '';
+    let secondForm = '';
 
     const strFocused = () => focused = 'str';
     const byFocused = () => focused = 'by';
@@ -72,7 +75,7 @@
         keyBytes = toUTF8Array(keyStr || '').map(v => `0x${Number(v).toString(16)}`).toString()
     } else if (focused === 'by') {
         let bytes = (keyBytes || '').split(',').map(v => parseInt((v || '').substr(2), 16))
-        keyStr = fromUTF8Array(bytes)
+        keyStr = keyBytes.length === 0 ? '' : fromUTF8Array(bytes)
     }
 </script>
 
@@ -100,12 +103,14 @@
         <div class="columns">
             <div class="column">
                 <label>
-                    <textarea class="textarea is-info" placeholder="Обычный текст" rows="15"></textarea>
+                    <textarea class="textarea is-info" bind:value={firstForm} placeholder="Обычный текст"
+                              rows="15"></textarea>
                 </label>
             </div>
             <div class="column">
                 <label>
-                    <textarea class="textarea is-success" placeholder="Шифровка" rows="15"></textarea>
+                    <textarea class="textarea is-success" bind:value={secondForm} placeholder="Шифровка"
+                              rows="15"></textarea>
                 </label>
             </div>
         </div>
