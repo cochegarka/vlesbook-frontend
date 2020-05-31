@@ -121,7 +121,7 @@
                 <div class="column">
                     <label>
                     <textarea class="textarea is-danger" bind:value={secondForm} placeholder="Шифровка"
-                              rows="15"></textarea>
+                              rows="15" readonly></textarea>
                     </label>
                 </div>
             {:else}
@@ -134,7 +134,7 @@
                 <div class="column">
                     <label>
                     <textarea class="textarea is-info" bind:value={firstForm} placeholder="Обычный текст"
-                              rows="15"></textarea>
+                              rows="15" readonly></textarea>
                     </label>
                 </div>
             {/if}
