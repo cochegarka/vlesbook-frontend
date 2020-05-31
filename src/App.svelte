@@ -75,11 +75,15 @@
         let bytes = toUTF8Array(keyStr || '').map(v => `0x${Number(v).toString(16)}`)
         if (bytes.length > 8) {
             bytes.splice(8)
+            keyStr = fromUTF8Array(bytes)
         }
         keyBytes = bytes.toString()
-        keyStr = fromUTF8Array(bytes)
     } else if (focused === 'by') {
         let bytes = (keyBytes || '').split(',').map(v => parseInt((v || '').substr(2), 16))
+        if (bytes.length > 8) {
+            bytes.splice(8)
+            keyBytes = bytes.map(v => `0x${Number(v).toString(16)}`).toString()
+        }
         keyStr = keyBytes.length === 0 ? '' : fromUTF8Array(bytes)
     }
 </script>
