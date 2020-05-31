@@ -110,18 +110,34 @@
 <section class="section">
     <div class="container">
         <div class="columns">
-            <div class="column">
-                <label>
+            <!-- зачем нужны компоненты лол -->
+            {#if selected === 'Шифровка'}
+                <div class="column">
+                    <label>
                     <textarea class="textarea is-info" bind:value={firstForm} placeholder="Обычный текст"
                               rows="15"></textarea>
-                </label>
-            </div>
-            <div class="column">
-                <label>
+                    </label>
+                </div>
+                <div class="column">
+                    <label>
                     <textarea class="textarea is-success" bind:value={secondForm} placeholder="Шифровка"
                               rows="15"></textarea>
-                </label>
-            </div>
+                    </label>
+                </div>
+            {:else}
+                <div class="column">
+                    <label>
+                    <textarea class="textarea is-success" bind:value={secondForm} placeholder="Шифровка"
+                              rows="15"></textarea>
+                    </label>
+                </div>
+                <div class="column">
+                    <label>
+                    <textarea class="textarea is-info" bind:value={firstForm} placeholder="Обычный текст"
+                              rows="15"></textarea>
+                    </label>
+                </div>
+            {/if}
         </div>
     </div>
 </section>
