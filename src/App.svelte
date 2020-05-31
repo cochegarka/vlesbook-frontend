@@ -120,14 +120,14 @@
                 </div>
                 <div class="column">
                     <label>
-                    <textarea class="textarea is-success" bind:value={secondForm} placeholder="Шифровка"
+                    <textarea class="textarea is-danger" bind:value={secondForm} placeholder="Шифровка"
                               rows="15"></textarea>
                     </label>
                 </div>
             {:else}
                 <div class="column">
                     <label>
-                    <textarea class="textarea is-success" bind:value={secondForm} placeholder="Шифровка"
+                    <textarea class="textarea is-danger" bind:value={secondForm} placeholder="Шифровка"
                               rows="15"></textarea>
                     </label>
                 </div>
