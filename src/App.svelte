@@ -72,7 +72,6 @@
         keyBytes = toUTF8Array(keyStr || '').map(v => `0x${Number(v).toString(16)}`).toString()
     } else if (focused === 'by') {
         let bytes = (keyBytes || '').split(',').map(v => parseInt((v || '').substr(2), 16))
-        console.log(bytes)
         keyStr = fromUTF8Array(bytes)
     }
 </script>
