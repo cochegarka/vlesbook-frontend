@@ -1,6 +1,7 @@
 <script>
     import 'bulma/css/bulma.css'
     import '@fortawesome/fontawesome-free/css/all.css'
+    import {fade} from 'svelte/transition'
 
     function toUTF8Array(str) {
         var utf8 = [];
@@ -68,6 +69,12 @@
     let firstForm = '';
     let secondForm = '';
 
+    let notificationText = '';
+    let notificationIsVisible = false;
+
+    let purpose = 'encrypt';
+    $: purpose = (selected === 'Шифровка') ? 'encrypt' : 'decrypt';
+
     const strFocused = () => focused = 'str';
     const byFocused = () => focused = 'by';
 
@@ -86,8 +93,48 @@
         }
         keyStr = keyBytes.length === 0 ? '' : fromUTF8Array(bytes)
     }
-</script>
 
+    async function fetchData() {
+        return fetch(`https://fast-retreat-25276.herokuapp.com/${purpose}?key=${keyStr}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=UTF-8'
+            },
+            body: selected === 'Шифровка' ? firstForm : secondForm
+        }).then(v => {
+            if (!v.ok) {
+                throw new Error(`Code: ${v.status}, message: ${v.statusText}`);
+            }
+
+            return v;
+        }).then(v => {
+            return v.text();
+        }).catch(error => {
+            notificationText = error;
+            notificationIsVisible = true;
+        });
+    }
+
+    async function handleClick() {
+        const data = await fetchData();
+
+        if (selected === 'Шифровка') {
+            secondForm = data;
+        } else {
+            firstForm = data;
+        }
+    }
+
+    function hideNotification() {
+        notificationIsVisible = false;
+    }
+</script>
+{#if notificationIsVisible === true}
+    <div transition:fade class="notification is-danger">
+        <button class="delete" on:click={hideNotification}></button>
+        {notificationText}
+    </div>
+{/if}
 <section class="section">
     <div class="container has-text-centered">
         <div class="field">
@@ -152,7 +199,7 @@
             </label>
         </div>
 
-        <button class="button is-primary">
+        <button class="button is-primary" on:click={handleClick}>
             <!-- И мне не стыдно! -->
             {#if selected === 'Шифровка'}
                 Зашифровать
