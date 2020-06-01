@@ -115,7 +115,22 @@
         });
     }
 
+    function formatByteSuffix(b) {
+        if (b === 1) return 'байт';
+
+        if (b >= 2 && b <= 4) return 'байта';
+
+        return 'байтов';
+    }
+
     async function handleClick() {
+        let bytesInKey = toUTF8Array(keyStr || '').length;
+        if (bytesInKey < 8) {
+            notificationText = `Ключ слишком короткий: ${bytesInKey} ${formatByteSuffix(bytesInKey)}, необходимо 8 байтов`;
+            notificationIsVisible = true;
+            return
+        }
+
         const data = await fetchData();
 
         if (selected === 'Шифровка') {
