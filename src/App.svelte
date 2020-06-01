@@ -227,7 +227,12 @@
 <footer class="footer">
     <div class="content has-text-centered">
         <p>
-            <strong>Передаю привет семье: маме, папе, брату, бабушке, кошке Анфисе.</strong>
+            Лабораторная работа №4 <b>"Стандарты симметричного шифрования"</b> по дисциплине <b>"Организация и
+            технология защиты информации"</b>
+        </p>
+        <p>
+            Сделали студенты группы ПИ-72 <a href="https://github.com/andiogenes">Антон Завьялов</a> и <a
+                href="https://github.com/NikolayCheremnov">Николай Черемнов</a>
         </p>
     </div>
 </footer>
